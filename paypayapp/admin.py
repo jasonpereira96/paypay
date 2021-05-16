@@ -10,14 +10,20 @@ from .models import PerformanceReviewSubmission
 
 # Register your models here.
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'last_name')
+    list_display = ('first_name', 'last_name', 'id', 'email')
     list_filter = ['first_name']
     filter_horizontal = ('reviewers',)
 
+class AnswerAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'answer_rating')
+
+class QuestionAdmin(admin.ModelAdmin):
+    list_display = ('question_text', 'id')
+
 admin.site.register(Employee, EmployeeAdmin)
 admin.site.register(Rating)
-admin.site.register(Question)
-admin.site.register(Answer)
+admin.site.register(Question, QuestionAdmin)
+admin.site.register(Answer, AnswerAdmin)
 admin.site.register(PerformanceReview)
 admin.site.register(PerformanceReviewSubmission)
 
