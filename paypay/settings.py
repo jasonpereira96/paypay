@@ -19,8 +19,12 @@ import os
 env = environ.Env()
 environ.Env.read_env()
 
+is_production = env('PRODUCTION') == 'TRUE'
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+if is_production:
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+else:
+    BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
