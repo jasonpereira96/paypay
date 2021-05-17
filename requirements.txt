@@ -1,6 +1,6 @@
 django
 django-heroku
 django-cors-headers
-environ
+django-environ
 gunicorn
 whitenoise
