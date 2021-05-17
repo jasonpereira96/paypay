@@ -11,6 +11,12 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import environ
+import django_heroku
+
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'r@p(7jeb62=sja*1zln1_shtz5+8v)-zcym#z#0+az*ra#i(9i'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -87,17 +93,20 @@ WSGI_APPLICATION = 'paypay.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'd1m40t3fkr7j3u',
-        'USER': 'asvwpmaqjvpgkv',
-        'PASSWORD': '91f76dcbbe6421bc099923fbebcacb559a0ac6a481244bd3c5d9c4eb4a718f8e',
-        'HOST': 'ec2-34-252-251-16.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432',
+if env('PRODUCTION') == 'FALSE':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DATABASE'),
+            'USER': env('DATABASE_USER'),
+            'PASSWORD': env('PASSWORD'),
+            'HOST': env('HOST'),
+            'PORT': '5432',
+        }
     }
-}
+else:
+    django_heroku.settings(locals())
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
