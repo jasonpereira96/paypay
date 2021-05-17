@@ -1,4 +1,5 @@
 django
+djangorestframework
 django-heroku
 django-cors-headers
 django-environ
