@@ -3,3 +3,4 @@ django-heroku
 django-cors-headers
 environ
 gunicorn
+whitenoise
